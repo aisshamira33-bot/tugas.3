@@ -1,0 +1,85 @@
+```python
+def rupiah(angka):
+    return "Rp" + f"{angka:,}".replace(",", ".")
+
+
+def tampilkan_menu():
+    print("\n===== MINI KASIR =====")
+    print("1. Nasi Pecel - Rp10.000")
+    print("2. Es Teh     - Rp3.000")
+    print("3. Kopi       - Rp5.000")
+    print("0. Selesai")
+    print("======================")
+
+
+def main():
+    menu = {
+        "1": ("Nasi Pecel", 10000),
+        "2": ("Es Teh", 3000),
+        "3": ("Kopi", 5000)
+    }
+
+    pesanan = []
+    total = 0
+
+    print("SELAMAT DATANG DI MINI KASIR!")
+
+    while True:
+        tampilkan_menu()
+        pilihan = input("Pilih menu: ")
+
+        if pilihan == "0":
+            break
+
+        if pilihan not in menu:
+            print("Pilihan tidak tersedia!")
+            continue
+
+        nama, harga = menu[pilihan]
+
+        try:
+            jumlah = int(input("Masukkan jumlah: "))
+
+            if jumlah <= 0:
+                print("Jumlah harus lebih dari 0!")
+                continue
+
+        except ValueError:
+            print("Masukkan jumlah berupa angka!")
+            continue
+
+        subtotal = harga * jumlah
+        total += subtotal
+        pesanan.append((nama, jumlah, subtotal))
+
+        print("Pesanan berhasil ditambahkan!")
+        print("Subtotal:", rupiah(subtotal))
+
+    print("\n======= STRUK BELANJA =======")
+
+    for nama, jumlah, subtotal in pesanan:
+        print(nama, "x", jumlah, "=", rupiah(subtotal))
+
+    print("-----------------------------")
+    print("Total pembayaran:", rupiah(total))
+
+    if total > 0:
+        while True:
+            try:
+                uang = int(input("Uang pelanggan: "))
+
+                if uang < total:
+                    print("Uang kurang:", rupiah(total - uang))
+                else:
+                    print("Kembalian:", rupiah(uang - total))
+                    break
+
+            except ValueError:
+                print("Masukkan nominal berupa angka!")
+
+    print("Terima kasih sudah berbelanja!")
+
+
+if __name__ == "__main__":
+    main()
+```
